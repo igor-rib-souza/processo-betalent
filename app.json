@@ -30,12 +30,17 @@
           "image": "./assets/images/splash-icon.png",
           "imageWidth": 200,
           "resizeMode": "contain",
-          "backgroundColor": "#ffffff"
+          "backgroundColor": "#0500FF"
         }
       ]
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "splash":{
+      "image": "./assets/images/BeTalent-Logo.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#0500FF"
     }
   }
 }

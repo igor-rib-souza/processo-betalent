@@ -48,12 +48,15 @@ export default function Page() {
 
       <Text style={styles.title}>Funcionários</Text>
 
+      <View style={styles.searchContainer}>
+        <FontAwesome name="search" size={20} color="#1C1C1C" style={styles.searchIcon} />
         <TextInput
-        style={styles.searchInput}
-        placeholder="Pesquisar"
-        value={searchQuery}
-        onChangeText={setSearchQuery}
-      />
+          style={styles.searchInput}
+          placeholder="Pesquisar"
+          value={searchQuery}
+          onChangeText={setSearchQuery}
+        />
+      </View>
 
 
 
@@ -94,13 +97,24 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 20,
   },
-  searchInput: {
-    borderRadius: 30,
-    padding: 10,
-    marginBottom: 20,
-    fontSize: 16,
+  searchContainer: {
+    flexDirection: "row",
+    alignItems: "center",
     backgroundColor: "#F5F5F5",
+    borderRadius: 30,
+    paddingHorizontal: 10,
+    marginBottom: 20,
+  },
+  searchIcon: {
+    height: 24,
+    width: 24,
     color: "#1C1C1C"
+  },
+  searchInput: {
+    flex: 1,
+    height: 40,
+    fontSize: 16,
+    color: "#1C1C1C",
   },
   employeeItem: {
     flexDirection: "row",

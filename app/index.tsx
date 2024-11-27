@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, FlatList, Image, TextInput, TouchableOpacity } from "react-native";
-import { FontAwesome } from '@expo/vector-icons'; // Para o ícone da setinha
+import { Feather } from '@expo/vector-icons';
 
 export default function Page() {
   const [employees, setEmployees] = useState<any[]>([]);
@@ -60,7 +60,7 @@ export default function Page() {
       <Text style={styles.title}>Funcionários</Text>
 
       <View style={styles.searchContainer}>
-        <FontAwesome name="search" size={20} color="#1C1C1C" style={styles.searchIcon} />
+        <Feather name="search" size={20} color="#1C1C1C" style={styles.searchIcon} />
         <TextInput
           style={styles.searchInput}
           placeholder="Pesquisar"
@@ -87,9 +87,9 @@ export default function Page() {
               <Image source={{ uri: item.image }} style={styles.image} />
               <Text style={styles.employeeName}>{item.name}</Text>
               <TouchableOpacity style={styles.icon} onPress={() => toggleEmployee(item.id)}>
-                <FontAwesome
+                <Feather
                   name={expandedEmployee === item.id ? "chevron-up" : "chevron-down"}
-                  size={24}
+                  size={28}
                   color="blue"
                 />
               </TouchableOpacity>

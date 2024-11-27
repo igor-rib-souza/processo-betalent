@@ -81,9 +81,18 @@ export default function Page() {
             </View>
           </View>
         }
-        renderItem={({ item }) => (
+        renderItem={({ item, index }) => (
           <View>
-            <View style={styles.employeeItem}>
+            <View
+              style={[
+                styles.employeeItem,
+                index === filteredEmployees.length - 1 && {
+                  borderBottomLeftRadius: 15,  // Aplica o borderRadius no canto inferior esquerdo
+                  borderBottomRightRadius: 15, // Aplica o borderRadius no canto inferior direito
+                  overflow: 'hidden',          // Necessário para evitar que o arredondamento seja cortado
+                },
+              ]}
+            >
               <Image source={{ uri: item.image }} style={styles.image} />
               <Text style={styles.employeeName}>{item.name}</Text>
               <TouchableOpacity style={styles.icon} onPress={() => toggleEmployee(item.id)}>
@@ -105,6 +114,7 @@ export default function Page() {
           </View>
         )}
       />
+
     </View>
   );
 }
@@ -144,6 +154,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingVertical: 10,
     borderBottomWidth: 1,
+    borderLeftWidth: 1,
+    borderRightWidth: 1,
     borderColor: "#ddd",
   },
   image: {
@@ -176,10 +188,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     paddingVertical: 10,
-    backgroundColor: "#F0F0F0",
+    backgroundColor: "#EDEFFB",
     borderBottomWidth: 1,
     borderColor: "#ddd",
-  },
+    borderTopLeftRadius: 15,  // Aplica o borderRadius no canto superior esquerdo
+    borderTopRightRadius: 15, // Aplica o borderRadius no canto superior direito
+    },
   headerText: {
     fontSize: 16,
     fontWeight: "bold",

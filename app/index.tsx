@@ -6,8 +6,8 @@ export default function Page() {
   const [employees, setEmployees] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [searchQuery, setSearchQuery] = useState<string>("");
+  const [expandedEmployee, setExpandedEmployee] = useState<string | null>(null); // Estado para controlar qual funcionário está expandido
 
-  // Buscar os dados da API usando fetch
   const fetchData = async () => {
     try {
       const response = await fetch("http://10.0.2.2:3000/employees");
@@ -25,15 +25,27 @@ export default function Page() {
     }
   };
 
-  // useEffect para carregar os dados ao iniciar
+  const formatPhoneNumber = (phone: string): string => {
+    const cleaned = phone.replace(/\D/g, ""); // Remove caracteres não numéricos
+    const match = cleaned.match(/^(\d{2})(\d{2})(\d{1})(\d{4})(\d{4})$/);
+    if (match) {
+      return `+${match[1]} ${match[2]} ${match[3]}${match[4]}-${match[5]}`;
+    }
+    return phone; // Retorna o original se não corresponder ao padrão
+  };
+
+
   useEffect(() => {
     fetchData();
   }, []);
 
-  // Função para filtrar os funcionários
   const filteredEmployees = employees.filter((employee) =>
     employee.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  const toggleEmployee = (id: string) => {
+    setExpandedEmployee(expandedEmployee === id ? null : id);
+  };
 
   if (loading) {
     return (
@@ -45,7 +57,6 @@ export default function Page() {
 
   return (
     <View style={styles.container}>
-
       <Text style={styles.title}>Funcionários</Text>
 
       <View style={styles.searchContainer}>
@@ -58,9 +69,7 @@ export default function Page() {
         />
       </View>
 
-
-
-        <FlatList
+      <FlatList
         data={filteredEmployees}
         keyExtractor={(item) => item.id.toString()}
         ListHeaderComponent={
@@ -73,12 +82,26 @@ export default function Page() {
           </View>
         }
         renderItem={({ item }) => (
-          <View style={styles.employeeItem}>
-            <Image source={{ uri: item.image }} style={styles.image} />
-            <Text style={styles.employeeName}>{item.name}</Text>
-            <TouchableOpacity style={styles.icon}>
-              <FontAwesome name={"chevron-down"} size={24} color="blue" light/>
-            </TouchableOpacity>
+          <View>
+            <View style={styles.employeeItem}>
+              <Image source={{ uri: item.image }} style={styles.image} />
+              <Text style={styles.employeeName}>{item.name}</Text>
+              <TouchableOpacity style={styles.icon} onPress={() => toggleEmployee(item.id)}>
+                <FontAwesome
+                  name={expandedEmployee === item.id ? "chevron-up" : "chevron-down"}
+                  size={24}
+                  color="blue"
+                />
+              </TouchableOpacity>
+            </View>
+
+            {expandedEmployee === item.id && (
+              <View style={styles.detailsContainer}>
+                <Text style={styles.detailText}>Cargo: {item.job}</Text>
+                <Text style={styles.detailText}>Data de Admissão: {new Date(item.admission_date).toLocaleDateString()}</Text>
+                <Text style={styles.detailText}>Telefone: {formatPhoneNumber(item.phone)}</Text>
+              </View>
+            )}
           </View>
         )}
       />
@@ -108,7 +131,7 @@ const styles = StyleSheet.create({
   searchIcon: {
     height: 24,
     width: 24,
-    color: "#1C1C1C"
+    color: "#1C1C1C",
   },
   searchInput: {
     flex: 1,
@@ -121,8 +144,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingVertical: 10,
     borderBottomWidth: 1,
-    borderLeftWidth: 1,
-    borderRightWidth: 1,
     borderColor: "#ddd",
   },
   image: {
@@ -138,6 +159,18 @@ const styles = StyleSheet.create({
   icon: {
     padding: 10,
     alignItems: "center",
+  },
+  detailsContainer: {
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    backgroundColor: "#F9F9F9",
+    borderBottomWidth: 1,
+    borderColor: "#ddd",
+  },
+  detailText: {
+    fontSize: 16,
+    color: "#555",
+    marginVertical: 2,
   },
   listHeader: {
     flexDirection: "row",

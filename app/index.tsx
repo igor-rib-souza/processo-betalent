@@ -98,7 +98,7 @@ export default function Page() {
             {expandedEmployee === item.id && (
               <View style={styles.detailsContainer}>
                 <Text style={styles.detailText}>Cargo: {item.job}</Text>
-                <Text style={styles.detailText}>Data de Admissão: {new Date(item.admission_date).toLocaleDateString()}</Text>
+                <Text style={styles.detailText}>Data de Admissão: {new Date(item.admission_date).toLocaleDateString("pt-BR")}</Text>
                 <Text style={styles.detailText}>Telefone: {formatPhoneNumber(item.phone)}</Text>
               </View>
             )}

@@ -77,7 +77,7 @@ export default function Page() {
             <Image source={{ uri: item.image }} style={styles.image} />
             <Text style={styles.employeeName}>{item.name}</Text>
             <TouchableOpacity style={styles.icon}>
-              <FontAwesome name="caret-down" size={24} color="blue" />
+              <FontAwesome name={"chevron-down"} size={24} color="blue" light/>
             </TouchableOpacity>
           </View>
         )}

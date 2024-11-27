@@ -4,9 +4,10 @@ import SearchBar from "./components/SearchBar";
 import EmployeeItem from "./components/EmployeeItem";
 import { fetchEmployees } from "./services/api";
 import { formatPhoneNumber } from "./utils/formatters";
+import { Employee } from "./types";  // Importando o tipo Employee
 
 export default function App() {
-  const [employees, setEmployees] = useState<any[]>([]);
+  const [employees, setEmployees] = useState<Employee[]>([]);  // Tipando o estado como Employee[]
   const [loading, setLoading] = useState<boolean>(true);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [expandedEmployee, setExpandedEmployee] = useState<string | null>(null);
@@ -89,9 +90,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#EDEFFB",
     borderBottomWidth: 1,
     borderColor: "#ddd",
-    borderTopLeftRadius: 15,  // Aplica o borderRadius no canto superior esquerdo
-    borderTopRightRadius: 15, // Aplica o borderRadius no canto superior direito
-    },
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15,
+  },
   headerText: {
     fontSize: 16,
     fontWeight: "bold",

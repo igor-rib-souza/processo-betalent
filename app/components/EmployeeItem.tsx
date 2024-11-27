@@ -1,9 +1,10 @@
 import React from "react";
 import { View, Image, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { Feather } from '@expo/vector-icons';
+import { Employee } from "../types";
 
 interface EmployeeItemProps {
-  item: any;
+  item: Employee;
   index: number;
   expandedEmployee: string | null;
   toggleEmployee: (id: string) => void;

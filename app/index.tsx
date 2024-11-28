@@ -30,9 +30,14 @@ export default function App() {
     setExpandedEmployee(expandedEmployee === id ? null : id);
   };
 
-  const filteredEmployees = employees.filter((employee) =>
-    employee.name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const filteredEmployees = employees.filter((employee) => {
+    const queryLower = searchQuery.toLowerCase();
+    return (
+      employee.name.toLowerCase().includes(queryLower) ||
+      employee.job.toLowerCase().includes(queryLower) ||
+      formatPhoneNumber(employee.phone).toLowerCase().includes(queryLower)
+    );
+  });
 
   if (loading) {
     return (
@@ -51,8 +56,8 @@ export default function App() {
         keyExtractor={(item) => item.id.toString()}
         ListHeaderComponent={
           <View style={styles.listHeader}>
-            <Text style={[styles.headerText]}>Foto</Text>
-            <Text style={[styles.headerTextName]}>Nome</Text>
+            <Text style={styles.headerText}>Foto</Text>
+            <Text style={styles.headerTextName}>Nome</Text>
             <View style={styles.icon}>
               <View style={styles.circle} />
             </View>
@@ -97,7 +102,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
     marginHorizontal: 25,
-},
+  },
   headerTextName: {
     fontSize: 16,
     fontWeight: "bold",
@@ -112,5 +117,5 @@ const styles = StyleSheet.create({
   icon: {
     padding: 10,
     alignItems: "center",
-  },  
+  },
 });
